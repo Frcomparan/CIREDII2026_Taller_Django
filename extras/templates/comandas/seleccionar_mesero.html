@@ -1,0 +1,32 @@
+{% extends "comandas/base.html" %}
+
+{% block title %}Seleccionar mesero · Comandas Web{% endblock %}
+
+{% block content %}
+<section class="panel panel-angosto">
+    <p class="etiqueta">Inicio de operación</p>
+    <h1>¿Quién atenderá las mesas?</h1>
+    <p class="texto-secundario">
+        Esta selección identifica al responsable de nuevas comandas.
+        No sustituye un inicio de sesión.
+    </p>
+
+    <form method="post" class="formulario">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <div class="error">{{ form.non_field_errors }}</div>
+        {% endif %}
+
+        <fieldset class="opciones-mesero">
+            <legend>{{ form.mesero.label }}</legend>
+            {{ form.mesero }}
+            {% if form.mesero.errors %}
+                <div class="error">{{ form.mesero.errors }}</div>
+            {% endif %}
+        </fieldset>
+
+        <button class="boton" type="submit">Continuar</button>
+    </form>
+</section>
+{% endblock %}

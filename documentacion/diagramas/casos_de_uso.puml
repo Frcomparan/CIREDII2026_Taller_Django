@@ -1,0 +1,45 @@
+@startuml
+title Casos de uso - Sistema de comandas
+left to right direction
+skinparam packageStyle rectangle
+
+actor Mesero
+actor Administrador
+
+rectangle "Sistema de comandas" {
+  usecase "Gestionar catálogos" as UC1
+  usecase "Seleccionar mesero activo" as UC2
+  usecase "Consultar mesas" as UC3
+  usecase "Abrir comanda" as UC4
+  usecase "Agregar producto" as UC5
+  usecase "Modificar detalle" as UC6
+  usecase "Eliminar detalle" as UC7
+  usecase "Consultar cuenta" as UC8
+  usecase "Cerrar comanda" as UC9
+  usecase "Generar / ver ticket" as UC10
+}
+
+Administrador --> UC1
+Mesero --> UC2
+Mesero --> UC3
+Mesero --> UC4
+Mesero --> UC5
+Mesero --> UC6
+Mesero --> UC7
+Mesero --> UC8
+Mesero --> UC9
+Mesero --> UC10
+
+UC9 ..> UC8 : <<include>>
+UC9 ..> UC10 : <<include>>
+
+note bottom of UC4
+  Precondiciones:
+  mesero activo y mesa disponible
+end note
+
+note bottom of UC5
+  Precondición:
+  comanda abierta
+end note
+@enduml

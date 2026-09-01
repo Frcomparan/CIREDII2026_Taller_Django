@@ -1,0 +1,60 @@
+@startuml
+title Modelo de datos - Sistema de comandas
+hide circle
+
+entity mesero {
+  * id : bigint <<PK>>
+  --
+  nombre : varchar(100)
+  activo : boolean
+}
+
+entity mesa {
+  * id : bigint <<PK>>
+  --
+  numero : integer <<UQ>>
+  capacidad : integer
+  activa : boolean
+}
+
+entity categoria {
+  * id : bigint <<PK>>
+  --
+  nombre : varchar(80) <<UQ>>
+  activa : boolean
+}
+
+entity producto {
+  * id : bigint <<PK>>
+  --
+  categoria_id : bigint <<FK>>
+  nombre : varchar(120)
+  precio : decimal(10,2)
+  activo : boolean
+}
+
+entity comanda {
+  * id : bigint <<PK>>
+  --
+  mesa_id : bigint <<FK>>
+  mesero_id : bigint <<FK>>
+  estado : varchar(10)
+  fecha_apertura : datetime
+  fecha_cierre : datetime <<nullable>>
+}
+
+entity detalle_comanda {
+  * id : bigint <<PK>>
+  --
+  comanda_id : bigint <<FK>>
+  producto_id : bigint <<FK>>
+  cantidad : integer
+  precio_unitario : decimal(10,2)
+}
+
+categoria ||--o{ producto
+mesa ||--o{ comanda
+mesero ||--o{ comanda
+comanda ||--o{ detalle_comanda
+producto ||--o{ detalle_comanda
+@enduml

@@ -1,0 +1,41 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Comandas Web{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'comandas/estilos.css' %}">
+</head>
+<body>
+    <header class="encabezado">
+        <a class="marca" href="{% url 'comandas:inicio' %}">Comandas Web</a>
+
+        {% if mesero_activo %}
+            <div class="sesion-mesero">
+                <span>Mesero: <strong>{{ mesero_activo.nombre }}</strong></span>
+                <form method="post" action="{% url 'comandas:cambiar_mesero' %}">
+                    {% csrf_token %}
+                    <button class="boton boton-secundario" type="submit">
+                        Cambiar
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+    </header>
+
+    <main class="contenido">
+        {% if messages %}
+            <div class="mensajes" aria-live="polite">
+                {% for message in messages %}
+                    <p class="mensaje mensaje-{{ message.tags }}">
+                        {{ message }}
+                    </p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

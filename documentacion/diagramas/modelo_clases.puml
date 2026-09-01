@@ -1,0 +1,69 @@
+@startuml
+title Modelo de clases - Sistema de comandas
+hide empty methods
+skinparam classAttributeIconSize 0
+
+class Mesero {
+  +id: BigAutoField
+  +nombre: String
+  +activo: Boolean
+  +__str__(): String
+}
+
+class Mesa {
+  +id: BigAutoField
+  +numero: PositiveInteger
+  +capacidad: PositiveInteger
+  +activa: Boolean
+  +ocupada: Boolean {derived}
+  +__str__(): String
+}
+
+class Categoria {
+  +id: BigAutoField
+  +nombre: String
+  +activa: Boolean
+  +__str__(): String
+}
+
+class Producto {
+  +id: BigAutoField
+  +categoria: Categoria
+  +nombre: String
+  +precio: Decimal
+  +activo: Boolean
+  +__str__(): String
+}
+
+class Comanda {
+  +id: BigAutoField
+  +mesa: Mesa
+  +mesero: Mesero
+  +estado: EstadoComanda
+  +fecha_apertura: DateTime
+  +fecha_cierre: DateTime?
+  +total: Decimal {derived}
+  +cerrar(): void
+}
+
+class DetalleComanda {
+  +id: BigAutoField
+  +comanda: Comanda
+  +producto: Producto
+  +cantidad: PositiveInteger
+  +precio_unitario: Decimal
+  +subtotal: Decimal {derived}
+}
+
+enum EstadoComanda {
+  ABIERTA
+  CERRADA
+}
+
+Categoria "1" -- "0..*" Producto : clasifica
+Mesa "1" -- "0..*" Comanda : recibe
+Mesero "1" -- "0..*" Comanda : atiende
+Comanda "1" *-- "0..*" DetalleComanda : contiene
+Producto "1" -- "0..*" DetalleComanda : referencia
+Comanda --> EstadoComanda
+@enduml

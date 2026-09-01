@@ -1,0 +1,461 @@
+:root {
+  color-scheme: light;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  color: #1f2933;
+  background: #f4f1ea;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.encabezado {
+  min-height: 4.5rem;
+  padding: 1rem clamp(1rem, 5vw, 4rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: white;
+  background: #263238;
+}
+
+.marca {
+  color: inherit;
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.sesion-mesero,
+.sesion-mesero form {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.contenido {
+  width: min(72rem, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 2rem 0 4rem;
+}
+
+.panel {
+  padding: 2rem;
+  border: 1px solid #d8d2c4;
+  border-radius: 1rem;
+  background: white;
+  box-shadow: 0 0.5rem 1.5rem rgb(31 41 51 / 8%);
+}
+
+.panel-angosto {
+  max-width: 34rem;
+  margin: 3rem auto;
+}
+
+.etiqueta {
+  margin: 0 0 0.25rem;
+  color: #9a3412;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+.texto-secundario,
+.dato-comanda {
+  color: #52606d;
+}
+
+.formulario {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.opciones-mesero {
+  padding: 0;
+  border: 0;
+}
+
+.opciones-mesero legend {
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+}
+
+.opciones-mesero > div {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.opciones-mesero label {
+  display: block;
+  padding: 0.75rem 1rem;
+  border: 1px solid #cbd2d9;
+  border-radius: 0.65rem;
+  cursor: pointer;
+}
+
+.boton {
+  width: fit-content;
+  padding: 0.65rem 1rem;
+  border: 0;
+  border-radius: 0.55rem;
+  color: white;
+  background: #c2410c;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.boton:hover {
+  background: #9a3412;
+}
+
+.boton-secundario {
+  border: 1px solid #cbd2d9;
+  color: #263238;
+  background: white;
+}
+
+.cabecera-pagina {
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.cuadricula-mesas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1rem;
+}
+
+.mesa {
+  padding: 1.25rem;
+  border: 2px solid transparent;
+  border-radius: 0.85rem;
+  background: white;
+}
+
+.mesa-disponible {
+  border-color: #86c5a2;
+}
+
+.mesa-ocupada {
+  border-color: #e7a977;
+}
+
+.mesa-encabezado {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.estado {
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.estado-disponible {
+  color: #166534;
+  background: #dcfce7;
+}
+
+.estado-ocupada {
+  color: #9a3412;
+  background: #ffedd5;
+}
+
+.proxima-accion {
+  display: block;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e4e7eb;
+  color: #7b8794;
+  font-size: 0.85rem;
+}
+
+.mensajes {
+  margin-bottom: 1rem;
+}
+
+.mensaje,
+.error {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+}
+
+.mensaje-success {
+  color: #14532d;
+  background: #dcfce7;
+}
+
+.mensaje-info {
+  color: #164e63;
+  background: #cffafe;
+}
+
+.mensaje-warning,
+.error {
+  color: #7c2d12;
+  background: #ffedd5;
+}
+
+@media (max-width: 40rem) {
+  .encabezado,
+  .cabecera-pagina,
+  .sesion-mesero {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
+.boton {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.migas {
+  margin-bottom: 1rem;
+}
+
+.migas a {
+  color: #9a3412;
+  font-weight: 700;
+}
+
+.resumen-comanda {
+  display: grid;
+  gap: 0.25rem;
+  color: #52606d;
+  text-align: right;
+}
+
+.distribucion-comanda {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(16rem, 1fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.tabla-contenedor {
+  overflow-x: auto;
+}
+
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla th,
+.tabla td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e4e7eb;
+  text-align: left;
+}
+
+.tabla th:not(:first-child),
+.tabla td:not(:first-child) {
+  text-align: right;
+}
+
+.tabla small {
+  display: block;
+  color: #7b8794;
+}
+
+.tabla tfoot th {
+  border-bottom: 0;
+  font-size: 1.1rem;
+}
+
+.campo {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.campo label {
+  font-weight: 750;
+}
+
+.campo select,
+.campo input {
+  width: 100%;
+  padding: 0.65rem;
+  border: 1px solid #9aa5b1;
+  border-radius: 0.5rem;
+  background: white;
+}
+
+.mensaje-error {
+  color: #7f1d1d;
+  background: #fee2e2;
+}
+
+@media (max-width: 48rem) {
+  .distribucion-comanda {
+    grid-template-columns: 1fr;
+  }
+
+  .resumen-comanda {
+    text-align: left;
+  }
+}
+
+.titulo-con-accion,
+.acciones-ticket {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.titulo-con-accion {
+  margin-bottom: 1rem;
+}
+
+.titulo-con-accion h2 {
+  margin-bottom: 0;
+}
+
+.formulario-cantidad {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+
+.formulario-cantidad input {
+  width: 4.5rem;
+  padding: 0.45rem;
+  border: 1px solid #9aa5b1;
+  border-radius: 0.4rem;
+}
+
+.boton-compacto {
+  padding: 0.45rem 0.6rem;
+  font-size: 0.82rem;
+}
+
+.boton-peligro {
+  background: #b91c1c;
+}
+
+.boton-peligro:hover {
+  background: #991b1b;
+}
+
+.solo-lectores {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.ticket {
+  width: min(46rem, 100%);
+  margin: 0 auto;
+}
+
+.ticket-encabezado {
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #263238;
+  text-align: center;
+}
+
+.ticket-datos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0;
+}
+
+.ticket-datos dt {
+  color: #7b8794;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.ticket-datos dd {
+  margin: 0.25rem 0 0;
+}
+
+.tabla-ticket {
+  margin: 1rem 0 1.5rem;
+}
+
+.acciones-ticket {
+  margin-top: 1.5rem;
+  justify-content: flex-end;
+}
+
+.nota-historica {
+  margin: 1.5rem 0 0;
+  color: #7b8794;
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+@media (max-width: 48rem) {
+  .titulo-con-accion,
+  .acciones-ticket {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .tabla-edicion th:nth-child(3),
+  .tabla-edicion td:nth-child(3) {
+    display: none;
+  }
+}
+
+@media print {
+  :root,
+  body {
+    background: white;
+  }
+
+  .encabezado,
+  .mensajes,
+  .no-imprimir {
+    display: none !important;
+  }
+
+  .contenido {
+    width: 100%;
+    padding: 0;
+  }
+
+  .ticket {
+    border: 0;
+    box-shadow: none;
+  }
+}
