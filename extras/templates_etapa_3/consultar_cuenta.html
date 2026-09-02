@@ -1,0 +1,49 @@
+{% extends "comandas/base.html" %}
+
+{% block title %}Cuenta de mesa {{ comanda.mesa.numero }} · Comandas Web{% endblock %}
+
+{% block content %}
+<nav class="migas" aria-label="Navegación secundaria">
+    <a href="{% url 'comandas:detalle_comanda' comanda.pk %}">← Seguir editando</a>
+</nav>
+
+<section class="ticket panel">
+    <header class="ticket-encabezado">
+        <p class="etiqueta">Vista previa</p>
+        <h1>Cuenta de mesa {{ comanda.mesa.numero }}</h1>
+        <p>Comanda #{{ comanda.pk }}</p>
+    </header>
+
+    <dl class="ticket-datos">
+        <div>
+            <dt>Mesero</dt>
+            <dd>{{ comanda.mesero.nombre }}</dd>
+        </div>
+        <div>
+            <dt>Apertura</dt>
+            <dd>{{ comanda.fecha_apertura|date:"d/m/Y H:i" }}</dd>
+        </div>
+    </dl>
+
+    {% include "comandas/fragmentos/desglose_ticket.html" %}
+
+    {% if comanda.detalles.all %}
+        <form
+            method="post"
+            action="{% url 'comandas:cerrar_comanda' comanda.pk %}"
+            class="acciones-ticket"
+            onsubmit="return confirm('¿Confirmas el cierre de la cuenta?');"
+        >
+            {% csrf_token %}
+            <a class="boton boton-secundario" href="{% url 'comandas:detalle_comanda' comanda.pk %}">
+                Seguir editando
+            </a>
+            <button class="boton" type="submit">Cerrar cuenta</button>
+        </form>
+    {% else %}
+        <div class="error">
+            Agrega al menos un producto antes de cerrar la cuenta.
+        </div>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends "comandas/base.html" %} {% block title %}Mesas · Comandas Web{%
+endblock %} {% block content %}
+<section class="cabecera-pagina">
+  <div>
+    <p class="etiqueta">Operación</p>
+    <h1>Estado de las mesas</h1>
+  </div>
+  <p class="texto-secundario">
+    Selecciona una mesa para comenzar o continuar su atención.
+  </p>
+</section>
+
+{% if mesas %}
+<section class="cuadricula-mesas" aria-label="Mesas del restaurante">
+  {% for mesa in mesas %}
+  <article
+    class="mesa {% if mesa.tiene_comanda_abierta %}mesa-ocupada{% else %}mesa-disponible{% endif %}"
+  >
+    <div class="mesa-encabezado">
+      <h2>Mesa {{ mesa.numero }}</h2>
+      {% if mesa.tiene_comanda_abierta %}
+      <span class="estado estado-ocupada">Ocupada</span>
+      {% else %}
+      <span class="estado estado-disponible">Disponible</span>
+      {% endif %}
+    </div>
+
+    <p>Capacidad: {{ mesa.capacidad }} personas</p>
+
+    {% if mesa.tiene_comanda_abierta %}
+    <p class="dato-comanda">Comanda #{{ mesa.comanda_abierta_id }} abierta</p>
+    <a
+      class="boton"
+      href="{% url 'comandas:detalle_comanda' mesa.comanda_abierta_id %}"
+    >
+      Continuar atención
+    </a>
+    {% else %}
+    <p class="dato-comanda">Lista para iniciar servicio</p>
+    <form method="post" action="{% url 'comandas:abrir_comanda' mesa.pk %}">
+      {% csrf_token %}
+      <button class="boton" type="submit">Abrir comanda</button>
+    </form>
+    {% endif %}
+  </article>
+  {% endfor %}
+</section>
+{% else %}
+<section class="panel">
+  <h2>No hay mesas disponibles</h2>
+  <p>Registra o activa mesas desde Django Admin.</p>
+</section>
+{% endif %} {% endblock %}
