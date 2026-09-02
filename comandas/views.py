@@ -14,13 +14,14 @@ def seleccionar_mesero(request):
     form = SeleccionarMeseroForm(request.POST)
     if form.is_valid():
       mesero = form.cleaned_data["mesero"]
-      request.session[CLAVE_MESERO_SESION] = mesero.id
+      request.session[CLAVE_MESERO_SESION] = mesero.pk
       messages.success(request, f"Mesero {mesero.nombre} seleccionado.")
       return redirect("comandas:tablero_mesas")
 
   else:
     form = SeleccionarMeseroForm()
-    render(
+
+    return render(
       request,
       "comandas/seleccionar_mesero.html",
       {"form": form}
@@ -54,7 +55,7 @@ def tablero_mesas(request):
     comanda_abierta_id=Subquery(
       comandas_abiertas.values('id')[:1]
       ),
-  ).filter(Q(tiene_comanda_abierta=True) | Q(activo=True)).order_by('numero')
+  ).filter(Q(tiene_comanda_abierta=True) | Q(activa=True)).order_by('numero')
 
   return render(
     request,
