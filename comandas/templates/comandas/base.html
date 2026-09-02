@@ -29,7 +29,9 @@
         <p class="mensaje mensaje-{{ message.tags }}">{{ message }}</p>
         {% endfor %}
       </div>
-      {% endif %} {% block content %}{% endblock %}
+      {% endif %} {% block content %}
+      
+      {% endblock %}
     </main>
   </body>
 </html>
