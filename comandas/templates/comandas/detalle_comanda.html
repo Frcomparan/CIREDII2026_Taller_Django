@@ -1,5 +1,4 @@
-{% extends "comandas/base.html" %} 
-{% block title %}Comanda {{ comanda.pk }} ·
+{% extends "comandas/base.html" %} {% block title %}Comanda {{ comanda.pk }} ·
 Comandas Web{% endblock %} {% block content %}
 <nav class="migas" aria-label="Navegación secundaria">
   <a href="{% url 'comandas:tablero_mesas' %}">← Volver a mesas</a>
@@ -18,17 +17,28 @@ Comandas Web{% endblock %} {% block content %}
 
 <div class="distribucion-comanda">
   <section class="panel">
-    <h2>Consumo</h2>
+    <div class="titulo-con-accion">
+      <h2>Consumo</h2>
+      {% if comanda.detalles.all %}
+      <a
+        class="boton boton-secundario"
+        href="{% url 'comandas:consultar_cuenta' comanda.pk %}"
+      >
+        Revisar cuenta
+      </a>
+      {% endif %}
+    </div>
 
     {% if comanda.detalles.all %}
     <div class="tabla-contenedor">
-      <table class="tabla">
+      <table class="tabla tabla-edicion">
         <thead>
           <tr>
             <th>Producto</th>
             <th>Cantidad</th>
             <th>Precio</th>
             <th>Subtotal</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -38,9 +48,46 @@ Comandas Web{% endblock %} {% block content %}
               {{ detalle.producto.nombre }}
               <small>{{ detalle.producto.categoria.nombre }}</small>
             </td>
-            <td>{{ detalle.cantidad }}</td>
+            <td>
+              <form
+                method="post"
+                action="{% url 'comandas:actualizar_detalle' detalle.pk %}"
+                class="formulario-cantidad"
+              >
+                {% csrf_token %}
+                <label class="solo-lectores" for="cantidad-{{ detalle.pk }}">
+                  Cantidad de {{ detalle.producto.nombre }}
+                </label>
+                <input
+                  id="cantidad-{{ detalle.pk }}"
+                  name="cantidad"
+                  type="number"
+                  min="1"
+                  value="{{ detalle.cantidad }}"
+                  required
+                />
+                <button class="boton boton-compacto" type="submit">
+                  Actualizar
+                </button>
+              </form>
+            </td>
             <td>${{ detalle.precio_unitario|floatformat:2 }}</td>
             <td>${{ detalle.subtotal|floatformat:2 }}</td>
+            <td>
+              <form
+                method="post"
+                action="{% url 'comandas:eliminar_detalle' detalle.pk %}"
+                onsubmit="return confirm('¿Eliminar este producto?');"
+              >
+                {% csrf_token %}
+                <button
+                  class="boton boton-peligro boton-compacto"
+                  type="submit"
+                >
+                  Eliminar
+                </button>
+              </form>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
@@ -48,6 +95,7 @@ Comandas Web{% endblock %} {% block content %}
           <tr>
             <th colspan="3">Total</th>
             <th>${{ comanda.total|floatformat:2 }}</th>
+            <th></th>
           </tr>
         </tfoot>
       </table>

@@ -36,4 +36,10 @@ class AgregarProductoForm(forms.Form):
             .order_by("categoria__nombre", "nombre")
         )
 
+class ActualizarCantidadForm(forms.Form):
+    cantidad = forms.IntegerField(
+        min_value=1,
+        label="Cantidad",
+        widget=forms.NumberInput(attrs={"min": 1}),
+    )
 

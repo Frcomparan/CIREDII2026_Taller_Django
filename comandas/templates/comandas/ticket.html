@@ -1,0 +1,47 @@
+{% extends "comandas/base.html" %}
+
+{% block title %}Ticket {{ comanda.pk }} · Comandas Web{% endblock %}
+
+{% block content %}
+<nav class="migas no-imprimir" aria-label="Navegación secundaria">
+    <a href="{% url 'comandas:tablero_mesas' %}">← Volver a mesas</a>
+</nav>
+
+<section class="ticket panel">
+    <header class="ticket-encabezado">
+        <p class="etiqueta">Cuenta cerrada</p>
+        <h1>Ticket #{{ comanda.pk }}</h1>
+        <p>Mesa {{ comanda.mesa.numero }}</p>
+    </header>
+
+    <dl class="ticket-datos">
+        <div>
+            <dt>Mesero</dt>
+            <dd>{{ comanda.mesero.nombre }}</dd>
+        </div>
+        <div>
+            <dt>Apertura</dt>
+            <dd>{{ comanda.fecha_apertura|date:"d/m/Y H:i" }}</dd>
+        </div>
+        <div>
+            <dt>Cierre</dt>
+            <dd>{{ comanda.fecha_cierre|date:"d/m/Y H:i" }}</dd>
+        </div>
+    </dl>
+
+    {% include "comandas/fragmentos/desglose_ticket.html" %}
+
+    <div class="acciones-ticket no-imprimir">
+        <a class="boton" href="{% url 'comandas:tablero_mesas' %}">
+            Volver a mesas
+        </a>
+        <button class="boton boton-secundario" type="button" onclick="window.print()">
+            Imprimir
+        </button>
+    </div>
+
+    <p class="nota-historica">
+        Los importes corresponden al momento de la captura.
+    </p>
+</section>
+{% endblock %}
