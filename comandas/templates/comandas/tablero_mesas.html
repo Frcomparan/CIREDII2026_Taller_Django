@@ -1,6 +1,4 @@
-{% extends "comandas/base.html" %}
-
-{% block title %}Mesas · Comandas Web {% endblock %} 
+{% extends "comandas/base.html" %} {% block title %}Mesas · Comandas Web{% endblock %} 
 {% block content %}
 <section class="cabecera-pagina">
   <div>
@@ -31,13 +29,19 @@
 
     {% if mesa.tiene_comanda_abierta %}
     <p class="dato-comanda">Comanda #{{ mesa.comanda_abierta_id }} abierta</p>
+    <a
+      class="boton"
+      href="{% url 'comandas:detalle_comanda' mesa.comanda_abierta_id %}"
+    >
+      Continuar atención
+    </a>
     {% else %}
     <p class="dato-comanda">Lista para iniciar servicio</p>
+    <form method="post" action="{% url 'comandas:abrir_comanda' mesa.pk %}">
+      {% csrf_token %}
+      <button class="boton" type="submit">Abrir comanda</button>
+    </form>
     {% endif %}
-
-    <span class="proxima-accion">
-      Acciones disponibles en el siguiente bloque
-    </span>
   </article>
   {% endfor %}
 </section>
@@ -46,5 +50,4 @@
   <h2>No hay mesas disponibles</h2>
   <p>Registra o activa mesas desde Django Admin.</p>
 </section>
-{% endif %} 
-{% endblock %}
+{% endif %} {% endblock %}

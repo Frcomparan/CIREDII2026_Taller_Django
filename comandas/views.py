@@ -9,7 +9,6 @@ from .forms import (
     AgregarProductoForm,
     SeleccionarMeseroForm,
 )
-
 from .models import Comanda, DetalleComanda, Mesa, Mesero
 
 CLAVE_MESERO_SESION = "mesero_activo_id"

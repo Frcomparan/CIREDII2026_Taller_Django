@@ -33,7 +33,7 @@ class AgregarProductoForm(forms.Form):
                 activo=True,
                 categoria__activa=True
             ).select_related("categoria")
-            .order_by("categoria__name", "nombre")
+            .order_by("categoria__nombre", "nombre")
         )
 
 
