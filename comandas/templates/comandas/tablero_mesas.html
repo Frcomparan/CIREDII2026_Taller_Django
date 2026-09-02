@@ -1,0 +1,47 @@
+{% extends "comandas/base.html" %} {% block title %}Mesas · Comandas Web{%
+endblock %} {% block content %}
+<section class="cabecera-pagina">
+  <div>
+    <p class="etiqueta">Operación</p>
+    <h1>Estado de las mesas</h1>
+  </div>
+  <p class="texto-secundario">
+    Selecciona una mesa para comenzar o continuar su atención.
+  </p>
+</section>
+
+{% if mesas %}
+<section class="cuadricula-mesas" aria-label="Mesas del restaurante">
+  {% for mesa in mesas %}
+  <article
+    class="mesa {% if mesa.tiene_comanda_abierta %}mesa-ocupada{% else %}mesa-disponible{% endif %}"
+  >
+    <div class="mesa-encabezado">
+      <h2>Mesa {{ mesa.numero }}</h2>
+      {% if mesa.tiene_comanda_abierta %}
+      <span class="estado estado-ocupada">Ocupada</span>
+      {% else %}
+      <span class="estado estado-disponible">Disponible</span>
+      {% endif %}
+    </div>
+
+    <p>Capacidad: {{ mesa.capacidad }} personas</p>
+
+    {% if mesa.tiene_comanda_abierta %}
+    <p class="dato-comanda">Comanda #{{ mesa.comanda_abierta_id }} abierta</p>
+    {% else %}
+    <p class="dato-comanda">Lista para iniciar servicio</p>
+    {% endif %}
+
+    <span class="proxima-accion">
+      Acciones disponibles en el siguiente bloque
+    </span>
+  </article>
+  {% endfor %}
+</section>
+{% else %}
+<section class="panel">
+  <h2>No hay mesas disponibles</h2>
+  <p>Registra o activa mesas desde Django Admin.</p>
+</section>
+{% endif %} {% endblock %}
